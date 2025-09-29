@@ -1,66 +1,61 @@
-// App.js
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import {
-  Button,
   Appbar,
-  Card,
-  Text,
-  TextInput,
-  useTheme,
   Switch,
+  Provider as PaperProvider,
+  MD3DarkTheme,
+  MD3LightTheme,
+  useTheme,
 } from "react-native-paper";
+import Products from "./src/components/products";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-function InnerApp({ isSwitchOn, onToggleSwitch }) {
-  const [text, setText] = React.useState("");
-  const [textEmail, setTextEmail] = React.useState("");
-
-  const theme = useTheme();
-
-  const handleReset = () => {
-    setText("");
-    setTextEmail("");
-  };
-
-  const handleSave = () => {
-    console.log("Saved:", { name: text, email: textEmail });
-  };
+function InnerApp() {
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const theme = isSwitchOn ? MD3DarkTheme : MD3LightTheme;
 
   return (
-    <View style={styles.container}>
-      <Appbar.Header>
-        <Appbar.Content title="Title" />
+    <PaperProvider theme={theme}>
+      <SafeAreaProvider>
+        <ThemedApp
+          isSwitchOn={isSwitchOn}
+          onToggleSwitch={() => setIsSwitchOn(!isSwitchOn)}
+        />
+      </SafeAreaProvider>
+    </PaperProvider>
+  );
+}
+
+function ThemedApp({ isSwitchOn, onToggleSwitch }) {
+  const theme = useTheme();
+
+  return (
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isSwitchOn ? "#000" : "#fff" }, 
+      ]}
+    >
+      <Appbar.Header
+        style={{
+          backgroundColor: isSwitchOn ? "#000" : "#fff",
+          elevation: 0,
+        }}
+      >
+        <Appbar.Content
+          title="BMW Showroom"
+          titleStyle={{
+            fontWeight: "bold",
+            fontSize: 20,
+            color: isSwitchOn ? "#fff" : "#000", 
+          }}
+        />
         <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
       </Appbar.Header>
 
-      <Card style={[styles.card, { backgroundColor: theme.colors.primary }]}>
-        <Card.Title title="Card Title" />
-        <Card.Content>
-          <Text style={styles.title}>Simple Form</Text>
-          <TextInput
-            label="Name"
-            value={text}
-            onChangeText={setText}
-            style={styles.input}
-          />
-          <TextInput
-            label="Email"
-            value={textEmail}
-            onChangeText={setTextEmail}
-            style={styles.input}
-          />
-        </Card.Content>
-
-        <Card.Actions style={styles.actions}>
-          <Button mode="contained" onPress={handleReset}>
-            Reset
-          </Button>
-          <Button mode="contained" onPress={handleSave}>
-            Save
-          </Button>
-        </Card.Actions>
-      </Card>
+      <Products isDark={isSwitchOn} />
 
       <StatusBar style={isSwitchOn ? "light" : "dark"} />
     </View>
@@ -70,9 +65,7 @@ function InnerApp({ isSwitchOn, onToggleSwitch }) {
 export default InnerApp;
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  card: { margin: 10, padding: 8 },
-  input: { marginBottom: 12 },
-  actions: { justifyContent: "flex-end", gap: 10 },
-  title: { marginBottom: 8, fontWeight: "bold" },
+  container: {
+    flex: 1,
+  },
 });

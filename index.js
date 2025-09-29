@@ -3,7 +3,6 @@ import * as React from "react";
 import { PaperProvider, DefaultTheme } from "react-native-paper";
 import App from "./App";
 
-// Custom themes
 const themeLight = {
   ...DefaultTheme,
   colors: {
