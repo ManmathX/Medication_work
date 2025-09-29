@@ -3,7 +3,7 @@ import * as React from "react";
 import { PaperProvider, DefaultTheme } from "react-native-paper";
 import App from "./App";
 
-// Light theme
+// Custom themes
 const themeLight = {
   ...DefaultTheme,
   colors: {
@@ -32,5 +32,4 @@ function Main() {
   );
 }
 
-// Register Main as the root for Expo
 registerRootComponent(Main);

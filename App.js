@@ -1,3 +1,4 @@
+// App.js
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
@@ -11,7 +12,7 @@ import {
   Switch,
 } from "react-native-paper";
 
-export default function App(onToggleSwitch) {
+function InnerApp({ isSwitchOn, onToggleSwitch }) {
   const [text, setText] = React.useState("");
   const [textEmail, setTextEmail] = React.useState("");
 
@@ -40,13 +41,13 @@ export default function App(onToggleSwitch) {
           <TextInput
             label="Name"
             value={text}
-            onChangeText={(t) => setText(t)}
+            onChangeText={setText}
             style={styles.input}
           />
           <TextInput
             label="Email"
             value={textEmail}
-            onChangeText={(t) => setTextEmail(t)}
+            onChangeText={setTextEmail}
             style={styles.input}
           />
         </Card.Content>
@@ -60,28 +61,18 @@ export default function App(onToggleSwitch) {
           </Button>
         </Card.Actions>
       </Card>
+
+      <StatusBar style={isSwitchOn ? "light" : "dark"} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  card: {
-    margin: 10,
-    padding: 8,
-  },
-  input: {
-    marginBottom: 12,
-  },
-  actions: {
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-  title: {
-    marginBottom: 8,
-    fontWeight: "bold",
-  },
-});
+export default InnerApp;
 
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  card: { margin: 10, padding: 8 },
+  input: { marginBottom: 12 },
+  actions: { justifyContent: "flex-end", gap: 10 },
+  title: { marginBottom: 8, fontWeight: "bold" },
+});
