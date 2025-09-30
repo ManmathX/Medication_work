@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
-import Video from 'react-native-video';
-import { merge } from 'deepmerge';
+import { Provider as PaperProvider, MD3DarkTheme, MD3LightTheme , BottomNavigation } from 'react-native-paper';
+import  merge  from 'deepmerge';
 
 
 import Products from './src/components/products';

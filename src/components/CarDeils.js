@@ -6,7 +6,7 @@ import { Text, useTheme } from 'react-native-paper';
 
 const CarDetails = ({ route }) => {
   const { car } = route.params;
-  const theme = useTheme(); // Get current theme (dark or light)
+  const theme = useTheme(); 
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>

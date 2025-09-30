@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
-import { Text, Switch, useTheme } from 'react-native-paper';
+import { Text, Switch, useTheme , TextInput} from 'react-native-paper';
 import { ThemeContext } from '../../App';
+
+import { Video } from 'expo-av';
 
 const Products = ({ navigation }) => {
   const theme = useTheme();
   const { toggleTheme, isDarkTheme } = useContext(ThemeContext);
+  const [text, setText] = React.useState('');
 
   const products = [
     { id: '1', name: 'BMW X5', price: 75000, description: 'A luxury midsize SUV that blends performance, comfort, and cutting-edge technology.', image: 'https://i.pinimg.com/1200x/30/64/b4/3064b4c9ef35b0085842303686c6a842.jpg' },
@@ -28,15 +31,30 @@ const Products = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={styles.headerContainer}>
+        <View style={styles.headerRow}>
         <Text style={[styles.header, { color: theme.colors.onBackground }]}>BMW Showroom</Text>
         <Switch value={isDarkTheme} onValueChange={toggleTheme} />
       </View>
+      <View>  
+                      <TextInput
+      label="searchQuery"
+      value={text}
+      onChangeText={text => setText(text)}
+    />
+      </View>
+    <Video
+      source={{ uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' }}
+      style={{ width: 300, height: 200 , padding:10, alignSelf:'center' , marginBottom:20}}
+      useNativeControls
+      resizeMode="contain"
+      shouldPlay
+    />
 
       <FlatList
         data={products}
         renderItem={renderProduct}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -44,9 +62,10 @@ const Products = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  headerContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
+  video: { width: '100%', aspectRatio: 16 / 9, marginBottom: 16, borderRadius: 10 },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   header: { fontSize: 22, fontWeight: 'bold' },
-  card: { marginBottom: 20, borderRadius: 12, padding: 12, elevation: 3 },
+  card: { marginBottom: 20, borderRadius: 12, padding: 12, elevation: 3, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 4, shadowOffset: { width: 0, height: 2 } },
   image: { width: '100%', height: 180, borderRadius: 10, marginBottom: 12 },
   name: { fontSize: 18, fontWeight: '600', marginBottom: 4 },
   price: { fontSize: 16, fontWeight: 'bold' },
