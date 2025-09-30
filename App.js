@@ -1,71 +1,46 @@
-import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet } from "react-native";
-import {
-  Appbar,
-  Switch,
-  Provider as PaperProvider,
-  MD3DarkTheme,
-  MD3LightTheme,
-  useTheme,
-} from "react-native-paper";
-import Products from "./src/components/products";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import * as React from 'react';
+import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider as PaperProvider, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
+import Video from 'react-native-video';
+import { merge } from 'deepmerge';
 
-function InnerApp() {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-  const theme = isSwitchOn ? MD3DarkTheme : MD3LightTheme;
 
-  return (
-    <PaperProvider theme={theme}>
-      <SafeAreaProvider>
-        <ThemedApp
-          isSwitchOn={isSwitchOn}
-          onToggleSwitch={() => setIsSwitchOn(!isSwitchOn)}
-        />
-      </SafeAreaProvider>
-    </PaperProvider>
-  );
-}
+import Products from './src/components/products';
+import CarDetails from './src/components/CarDeils';
 
-function ThemedApp({ isSwitchOn, onToggleSwitch }) {
-  const theme = useTheme();
+const Stack = createStackNavigator();
+
+const CombinedDefaultTheme = merge(MD3LightTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(MD3DarkTheme, NavigationDarkTheme);
+
+export const ThemeContext = React.createContext();
+
+export default function App() {
+  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+
+  const theme = isDarkTheme ? CombinedDarkTheme : CombinedDefaultTheme;
+
+  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: isSwitchOn ? "#000" : "#fff" }, 
-      ]}
-    >
-      <Appbar.Header
-        style={{
-          backgroundColor: isSwitchOn ? "#000" : "#fff",
-          elevation: 0,
-        }}
-      >
-        <Appbar.Content
-          title="BMW Showroom"
-          titleStyle={{
-            fontWeight: "bold",
-            fontSize: 20,
-            color: isSwitchOn ? "#fff" : "#000", 
-          }}
-        />
-        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-      </Appbar.Header>
-
-      <Products isDark={isSwitchOn} />
-
-      <StatusBar style={isSwitchOn ? "light" : "dark"} />
-    </View>
+    <ThemeContext.Provider value={{ toggleTheme, isDarkTheme }}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator initialRouteName="Products">
+            <Stack.Screen
+              name="Products"
+              component={Products}
+              options={{ title: 'BMW Showroom' }}
+            />
+            <Stack.Screen
+              name="CarDetails"
+              component={CarDetails}
+              options={{ title: 'Car Blog' }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </ThemeContext.Provider>
   );
 }
-
-export default InnerApp;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
