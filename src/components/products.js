@@ -126,7 +126,7 @@ const Products = ({ navigation }) => {
           style={styles.video}
           useNativeControls
           resizeMode="contain"
-          shouldPlay={false} // do not autoplay
+          shouldPlay={false} 
         />
       </View>
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   headerRight: { flexDirection: 'row', alignItems: 'center' },
   searchContainer: { paddingHorizontal: 12, paddingBottom: 8 },
   videoWrapper: { padding: 10 },
-  video: { width: '100%', height: 200, borderRadius: 10, backgroundColor: '#000' },
+  video: { width: '100%', height: 100, borderRadius: 10, backgroundColor: '#000' },
   listContainer: { flex: 1 },
   card: {
     marginBottom: 16,
