@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW Showroom - Luxury Cars</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">BMW Showroom</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#cars">Cars</a></li>
+                <li><a href="#chat">AI Chat</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to BMW Showroom</h1>
+            <p>Experience luxury and performance like never before</p>
+            <button class="cta-btn" onclick="scrollToSection('cars')">Explore Our Collection</button>
+        </div>
+    </section>
+
+    <section id="cars" class="cars-section">
+        <div class="container">
+            <h2>Our Collection</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search cars..." oninput="searchCars()">
+            </div>
+            <div class="cars-grid" id="carsGrid">
+                <!-- Cars will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="chat" class="chat-section">
+        <div class="container">
+            <h2>BMW Assistant</h2>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Ask about BMW cars..." onkeypress="handleEnter(event)">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>📧 Email</h3>
+                    <p>support@bmwshowroom.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📞 Phone</h3>
+                    <p>9752834140</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📍 Address</h3>
+                    <p>123 Luxury Drive, Auto City, NY 10001</p>
+                </div>
+                <div class="contact-card">
+                    <h3>🕒 Hours</h3>
+                    <p>Monday – Saturday<br>9:00 AM – 7:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 BMW Showroom. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

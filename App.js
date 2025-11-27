@@ -1,43 +1,31 @@
-import * as React from 'react';
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider, MD3DarkTheme, MD3LightTheme , BottomNavigation } from 'react-native-paper';
-import  merge  from 'deepmerge';
+import merge from 'deepmerge';
+import * as React from 'react';
+import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
+// import { StatusBar } from 'expo-status-bar'; // not using this right now
+import AppNavigator from './src/navigation/AppNavigator';
 
-
-import Products from './src/components/products';
-import CarDetails from './src/components/CarDeils';
-
-const Stack = createStackNavigator();
-
-const CombinedDefaultTheme = merge(MD3LightTheme, NavigationDefaultTheme);
+const CombinedLightTheme = merge(MD3LightTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(MD3DarkTheme, NavigationDarkTheme);
 
-export const ThemeContext = React.createContext();
+export const ThemeContext = React.createContext({ isDarkTheme: false, toggleTheme: () => { } });
 
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+  const theme = isDarkTheme ? CombinedDarkTheme : CombinedLightTheme;
 
-  const theme = isDarkTheme ? CombinedDarkTheme : CombinedDefaultTheme;
+  const toggleTheme = () => setIsDarkTheme(prev => !prev);
 
-  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
+  const themeContextValue = React.useMemo(() => ({
+    isDarkTheme,
+    toggleTheme
+  }), [isDarkTheme]);
 
   return (
-    <ThemeContext.Provider value={{ toggleTheme, isDarkTheme }}>
+    <ThemeContext.Provider value={themeContextValue}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
-          <Stack.Navigator initialRouteName="Products">
-            <Stack.Screen
-              name="Products"
-              component={Products}
-              options={{ title: 'BMW Showroom' }}
-            />
-            <Stack.Screen
-              name="CarDetails"
-              component={CarDetails}
-              options={{ title: 'Car Blog' }}
-            />
-          </Stack.Navigator>
+          <AppNavigator />
         </NavigationContainer>
       </PaperProvider>
     </ThemeContext.Provider>
