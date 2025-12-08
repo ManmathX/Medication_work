@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const bodyParser = require('body-parser'); // not needed anymore
+// const bodyParser = require('body-parser'); 
 require('dotenv').config();
 
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json());
-// app.use(bodyParser.json()); // old way, doesn't work
+// app.use(bodyParser.json()); 
 
 // TODO: add rate limiting later
 // const rateLimit = require('express-rate-limit');

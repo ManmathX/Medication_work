@@ -1,8 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Avatar, Button, Card, Divider, List, Surface, Text, useTheme } from 'react-native-paper';
 
 const AccountScreen = () => {
     const theme = useTheme();
+    const navigation = useNavigation();
 
     return (
         <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]} contentContainerStyle={styles.content}>
@@ -13,8 +15,21 @@ const AccountScreen = () => {
                     <Text variant="bodyMedium" style={styles.subtitle}>Sign in to unlock exclusive features</Text>
                 </Card.Content>
                 <Card.Actions style={styles.cardActions}>
-                    <Button mode="contained" icon="login" style={styles.signInButton}>Sign In</Button>
-                    <Button mode="outlined" icon="account-plus">Create Account</Button>
+                    <Button
+                        mode="contained"
+                        icon="login"
+                        style={styles.signInButton}
+                        onPress={() => navigation.navigate('SignIn')}
+                    >
+                        Sign In
+                    </Button>
+                    <Button
+                        mode="outlined"
+                        icon="account-plus"
+                        onPress={() => navigation.navigate('CreateAccount')}
+                    >
+                        Create Account
+                    </Button>
                 </Card.Actions>
             </Card>
             <Card style={styles.benefitsCard} mode="elevated">

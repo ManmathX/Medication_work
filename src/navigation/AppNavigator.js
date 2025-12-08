@@ -46,6 +46,16 @@ const AppNavigator = () => {
         <Stack.Navigator initialRouteName="Main">
             <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
             <Stack.Screen name="CarDetails" component={CarDetailsScreen} options={{ title: 'Car Details' }} />
+            <Stack.Screen
+                name="SignIn"
+                component={require('../screens/SignInScreen').default}
+                options={{ title: 'Sign In' }}
+            />
+            <Stack.Screen
+                name="CreateAccount"
+                component={require('../screens/CreateAccountScreen').default}
+                options={{ title: 'Create Account' }}
+            />
         </Stack.Navigator>
     );
 };
