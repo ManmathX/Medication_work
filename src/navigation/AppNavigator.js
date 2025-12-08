@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useContext, useState } from 'react';
 import { Platform, SafeAreaView, StyleSheet } from 'react-native';
@@ -13,6 +14,7 @@ const Stack = createStackNavigator();
 
 const MainTabs = () => {
     const theme = useTheme();
+    const navigation = useNavigation();
     const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
     const [index, setIndex] = useState(0);
     const [routes] = useState([
@@ -23,10 +25,10 @@ const MainTabs = () => {
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        home: () => <HomeScreen isDarkTheme={isDarkTheme} onThemeToggle={toggleTheme} />,
-        chatbot: ChatBotScreen,
-        contact: ContactScreen,
-        account: AccountScreen,
+        home: () => <HomeScreen navigation={navigation} isDarkTheme={isDarkTheme} onThemeToggle={toggleTheme} />,
+        chatbot: () => <ChatBotScreen navigation={navigation} />,
+        contact: () => <ContactScreen navigation={navigation} />,
+        account: () => <AccountScreen navigation={navigation} />,
     });
 
     return (
