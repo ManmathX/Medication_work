@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 // const bodyParser = require('body-parser'); 
 require('dotenv').config();
@@ -14,13 +13,8 @@ app.use(express.json());
 // TODO: add rate limiting later
 // const rateLimit = require('express-rate-limit');
 
-// conect to mongodb
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/bmw-showroom', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+// Database: In-memory storage is now used in routes instead of MongoDB
+console.log('Server running in in-memory mode (No MongoDB)');
 
 // routes
 const carRoutes = require('./routes/cars');
